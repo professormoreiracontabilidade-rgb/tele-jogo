@@ -2,506 +2,57 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
-<title>Telejogo Retrô - Professor Moreira</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Telejogo Tela Cheia - Professor Moreira</title>
 <style>
-  *{box-sizing:border-box;margin:0;padding:0}
-  html,body{
-    width:100%;
-    height:100%;
-    overflow:hidden;
-    background:#050505;
-    color:#fff;
-    font-family:Arial, Helvetica, sans-serif;
-    touch-action:none;
-  }
-
-  body{
-    display:flex;
-    align-items:center;
-    justify-content:center;
-  }
-
-  .game{
-    width:100vw;
-    height:100vh;
-    max-width:560px;
-    background:#000;
-    display:flex;
-    flex-direction:column;
-    border:3px solid #fff;
-    position:relative;
-    box-shadow:0 0 30px rgba(255,255,255,.18);
-  }
-
-  .top{
-    height:92px;
-    border-bottom:3px solid #fff;
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
-    gap:6px;
-    background:#050505;
-    text-align:center;
-  }
-
-  .title{
-    font-size:22px;
-    font-weight:900;
-    letter-spacing:4px;
-  }
-
-  .subtitle{
-    font-size:11px;
-    letter-spacing:2px;
-    opacity:.85;
-  }
-
-  .score{
-    display:flex;
-    gap:55px;
-    font-size:28px;
-    font-weight:900;
-    line-height:1;
-  }
-
-  .bar{
-    height:38px;
-    border-bottom:3px solid #fff;
-    display:flex;
-    justify-content:space-around;
-    align-items:center;
-    gap:8px;
-    padding:4px 8px;
-    background:#0b0b0b;
-  }
-
-  .bar button, .bar select{
-    background:#000;
-    color:#fff;
-    border:2px solid #fff;
-    border-radius:8px;
-    padding:5px 8px;
-    font-size:11px;
-    font-weight:800;
-  }
-
-  .field-wrap{
-    flex:1;
-    min-height:0;
-    background:#000;
-    position:relative;
-    display:flex;
-  }
-
-  canvas{
-    width:100%;
-    height:100%;
-    background:#000;
-    display:block;
-    image-rendering:pixelated;
-  }
-
-  .controls{
-    height:115px;
-    border-top:3px solid #fff;
-    background:#050505;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    padding:6px 14px 10px;
-    gap:10px;
-  }
-
-  .pad{
-    display:flex;
-    gap:10px;
-    align-items:center;
-  }
-
-  .btn{
-    width:78px;
-    height:84px;
-    border:3px solid #fff;
-    border-radius:14px;
-    background:#111;
-    color:#fff;
-    font-size:34px;
-    font-weight:900;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    user-select:none;
-    box-shadow:0 5px 0 #777;
-  }
-
-  .btn:active,.btn.active{
-    transform:translateY(4px);
-    box-shadow:0 1px 0 #777;
-    background:#fff;
-    color:#000;
-  }
-
-  .center-controls{
-    display:flex;
-    flex-direction:column;
-    gap:6px;
-    align-items:center;
-    min-width:86px;
-  }
-
-  .center-controls button{
-    width:86px;
-    height:35px;
-    background:#fff;
-    color:#000;
-    border:0;
-    border-radius:10px;
-    font-weight:900;
-    font-size:12px;
-  }
-
-  .hint{
-    font-size:9px;
-    opacity:.75;
-    text-align:center;
-    line-height:1.2;
-  }
-
-  .message{
-    position:absolute;
-    inset:0;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    pointer-events:none;
-    font-size:26px;
-    font-weight:900;
-    letter-spacing:3px;
-    text-align:center;
-    text-shadow:0 0 12px #fff;
-    opacity:0;
-    transition:.25s;
-    z-index:5;
-  }
-  .message.show{opacity:1}
-
-  .crt:before{
-    content:"";
-    position:absolute;
-    inset:0;
-    pointer-events:none;
-    background:repeating-linear-gradient(
-      to bottom,
-      rgba(255,255,255,.06) 0px,
-      rgba(255,255,255,.06) 1px,
-      transparent 2px,
-      transparent 4px
-    );
-    mix-blend-mode:screen;
-    opacity:.22;
-    z-index:10;
-  }
-
-  .crt:after{
-    content:"";
-    position:absolute;
-    inset:0;
-    pointer-events:none;
-    box-shadow:inset 0 0 70px rgba(255,255,255,.10), inset 0 0 120px rgba(0,0,0,.9);
-    z-index:11;
-  }
-
-  @media (max-height:680px){
-    .top{height:76px}
-    .score{font-size:24px}
-    .bar{height:34px}
-    .controls{height:98px}
-    .btn{width:66px;height:72px;font-size:30px}
-    .center-controls button{height:30px}
-  }
-
-  @media (min-width:700px){
-    .game{height:96vh;border-radius:18px;overflow:hidden}
-  }
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:100%;height:100%;overflow:hidden;background:#000;color:#fff;font-family:Arial,sans-serif;touch-action:none;user-select:none}
+body{position:fixed;inset:0}
+.game{position:fixed;inset:0;background:#000;overflow:hidden}
+canvas{position:absolute;inset:0;width:100vw;height:100vh;background:#000;image-rendering:pixelated}
+.hud{position:absolute;top:0;left:0;right:0;height:46px;background:rgba(0,0,0,.72);border-bottom:2px solid #fff;display:flex;align-items:center;justify-content:space-between;padding:3px 7px;z-index:5}
+.logo{font-size:12px;font-weight:900;letter-spacing:1px;line-height:1.05}.logo small{display:block;font-size:7px;opacity:.75}
+.score{position:absolute;left:50%;transform:translateX(-50%);display:flex;gap:36px;font:900 27px monospace}
+.menu{display:flex;gap:4px}.menu select,.menu button{height:24px;background:#000;color:#fff;border:1.5px solid #fff;border-radius:7px;font-size:8px;font-weight:900;padding:0 4px}
+.touch{position:absolute;z-index:7;width:78px;height:78px;border:3px solid #fff;background:rgba(255,255,255,.08);color:#fff;border-radius:18px;display:flex;align-items:center;justify-content:center;font-size:36px;font-weight:900;backdrop-filter:blur(3px)}
+.touch:active,.touch.active{background:#fff;color:#000}.left-up{left:6px;bottom:98px}.left-down{left:6px;bottom:12px}.right-up{right:6px;bottom:98px}.right-down{right:6px;bottom:12px}
+.center{position:absolute;left:50%;bottom:14px;transform:translateX(-50%);z-index:8;display:flex;gap:8px}.center button{width:64px;height:34px;background:#fff;color:#000;border:0;border-radius:11px;font-size:10px;font-weight:900;box-shadow:0 4px 0 #777}.center button:active{transform:translateY(3px);box-shadow:0 1px 0 #777}
+.message{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;padding:20px;pointer-events:none;z-index:6;font-size:27px;font-weight:900;letter-spacing:3px;text-shadow:0 0 14px #fff;opacity:0;transition:.2s}.message.show{opacity:1}
+.crt:before{content:"";position:absolute;inset:0;pointer-events:none;z-index:12;background:repeating-linear-gradient(to bottom,rgba(255,255,255,.05) 0,rgba(255,255,255,.05) 1px,transparent 2px,transparent 4px);opacity:.16}
+.crt:after{content:"";position:absolute;inset:0;pointer-events:none;z-index:13;box-shadow:inset 0 0 50px rgba(255,255,255,.08), inset 0 0 120px rgba(0,0,0,.9)}
+@media (min-width:600px){.hud{height:54px}.logo{font-size:16px}.logo small{font-size:9px}.score{font-size:34px;gap:52px}.menu select,.menu button{height:30px;font-size:10px}.touch{width:92px;height:92px;font-size:42px}.left-up{left:12px;bottom:116px}.left-down{left:12px;bottom:16px}.right-up{right:12px;bottom:116px}.right-down{right:12px;bottom:16px}.center button{width:82px;height:38px;font-size:12px}}
+@media (orientation:landscape){.touch{width:72px;height:72px;font-size:32px}.left-up{left:10px;bottom:84px}.left-down{left:10px;bottom:8px}.right-up{right:10px;bottom:84px}.right-down{right:10px;bottom:8px}.center{bottom:10px}}
 </style>
 </head>
 <body>
 <div class="game crt">
-  <div class="top">
-    <div class="title">TELEJOGO</div>
-    <div class="subtitle">PROFESSOR MOREIRA</div>
-    <div class="score"><span id="p1">00</span><span id="p2">00</span></div>
-  </div>
-
-  <div class="bar">
-    <select id="mode">
-      <option value="ai">1 JOGADOR</option>
-      <option value="pvp">2 JOGADORES</option>
-    </select>
-    <select id="points">
-      <option value="10">ATÉ 10</option>
-      <option value="15" selected>ATÉ 15</option>
-      <option value="21">ATÉ 21</option>
-    </select>
-    <button id="sound">SOM ON</button>
-  </div>
-
-  <div class="field-wrap">
-    <canvas id="c"></canvas>
-    <div class="message" id="msg">APERTE INICIAR</div>
-  </div>
-
-  <div class="controls">
-    <div class="pad">
-      <div class="btn" data-key="w">▲</div>
-      <div class="btn" data-key="s">▼</div>
-    </div>
-
-    <div class="center-controls">
-      <button id="start">INICIAR</button>
-      <button id="reset">ZERAR</button>
-      <div class="hint">PC: W/S e ↑/↓<br>CELULAR: BOTÕES</div>
-    </div>
-
-    <div class="pad">
-      <div class="btn" data-key="ArrowUp">▲</div>
-      <div class="btn" data-key="ArrowDown">▼</div>
-    </div>
-  </div>
+<canvas id="c"></canvas>
+<div class="hud"><div class="logo">TELEJOGO<small>PROFESSOR MOREIRA</small></div><div class="score"><span id="p1">00</span><span id="p2">00</span></div><div class="menu"><select id="mode"><option value="ai">1P</option><option value="pvp">2P</option></select><select id="points"><option value="10">10</option><option value="15" selected>15</option><option value="21">21</option></select><button id="sound">🔊</button></div></div>
+<div class="message show" id="msg">APERTE INICIAR</div>
+<div class="touch left-up" data-key="w">▲</div><div class="touch left-down" data-key="s">▼</div><div class="touch right-up" data-key="ArrowUp">▲</div><div class="touch right-down" data-key="ArrowDown">▼</div>
+<div class="center"><button id="start">INICIAR</button><button id="reset">ZERAR</button></div>
 </div>
-
 <script>
-const canvas=document.getElementById("c");
-const ctx=canvas.getContext("2d");
-const p1El=document.getElementById("p1");
-const p2El=document.getElementById("p2");
-const msg=document.getElementById("msg");
-const modeEl=document.getElementById("mode");
-const pointsEl=document.getElementById("points");
-const soundBtn=document.getElementById("sound");
-
-let W=0,H=0, running=false, paused=true, muted=false;
-let score1=0, score2=0;
-let keys={};
-let last=0;
-
-const paddleW=12;
-let paddleH=95;
-let left={x:20,y:0,vy:0};
-let right={x:0,y:0,vy:0};
-let ball={x:0,y:0,vx:0,vy:0,r:9,speed:310};
-
-function resize(){
-  const rect=canvas.getBoundingClientRect();
-  canvas.width=Math.floor(rect.width*devicePixelRatio);
-  canvas.height=Math.floor(rect.height*devicePixelRatio);
-  ctx.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0);
-  W=rect.width; H=rect.height;
-  paddleH=Math.max(82, Math.min(120, H*.18));
-  left.y=Math.min(left.y,H-paddleH);
-  right.x=W-32;
-  right.y=Math.min(right.y,H-paddleH);
-  if(!running) resetPositions();
-}
-window.addEventListener("resize",resize);
-
-function resetPositions(dir=1){
-  left.x=20; right.x=W-32;
-  left.y=H/2-paddleH/2;
-  right.y=H/2-paddleH/2;
-  ball.x=W/2; ball.y=H/2;
-  ball.r=Math.max(8, Math.min(12, W*.022));
-  ball.speed=Math.max(290, Math.min(430, W*.75));
-  const angle=(Math.random()*0.8-0.4);
-  ball.vx=dir*ball.speed;
-  ball.vy=angle*ball.speed;
-}
-
-function show(text, time=900){
-  msg.textContent=text;
-  msg.classList.add("show");
-  clearTimeout(show.t);
-  show.t=setTimeout(()=>msg.classList.remove("show"),time);
-}
-
-let audioCtx=null;
-function beep(freq=440,dur=.06,type="square"){
-  if(muted) return;
-  audioCtx=audioCtx||new (window.AudioContext||window.webkitAudioContext)();
-  const o=audioCtx.createOscillator();
-  const g=audioCtx.createGain();
-  o.type=type; o.frequency.value=freq;
-  g.gain.value=.08;
-  o.connect(g); g.connect(audioCtx.destination);
-  o.start();
-  g.gain.exponentialRampToValueAtTime(.001,audioCtx.currentTime+dur);
-  o.stop(audioCtx.currentTime+dur);
-}
-
-function draw(){
-  ctx.clearRect(0,0,W,H);
-  ctx.fillStyle="#000";
-  ctx.fillRect(0,0,W,H);
-
-  ctx.fillStyle="#fff";
-
-  // linha central pontilhada
-  for(let y=8;y<H;y+=24){
-    ctx.fillRect(W/2-2,y,4,12);
-  }
-
-  // bordas estilo antigo
-  ctx.fillRect(0,0,W,4);
-  ctx.fillRect(0,H-4,W,4);
-
-  // raquetes
-  ctx.fillRect(left.x,left.y,paddleW,paddleH);
-  ctx.fillRect(right.x,right.y,paddleW,paddleH);
-
-  // bolinha quadrada/retrô
-  ctx.fillRect(ball.x-ball.r,ball.y-ball.r,ball.r*2,ball.r*2);
-
-  // marcas laterais antigas
-  ctx.font="bold 12px monospace";
-  ctx.fillText("JOGADOR 1",12,18);
-  ctx.fillText(modeEl.value==="ai"?"COMPUTADOR":"JOGADOR 2",W-110,18);
-}
-
-function update(dt){
-  const speed=430;
-
-  if(keys.w) left.y-=speed*dt;
-  if(keys.s) left.y+=speed*dt;
-
-  if(modeEl.value==="pvp"){
-    if(keys.ArrowUp) right.y-=speed*dt;
-    if(keys.ArrowDown) right.y+=speed*dt;
-  }else{
-    // IA simples, estilo Telejogo antigo
-    const target=ball.y-paddleH/2;
-    right.y += (target-right.y)*Math.min(1,dt*4.2);
-  }
-
-  left.y=Math.max(0,Math.min(H-paddleH,left.y));
-  right.y=Math.max(0,Math.min(H-paddleH,right.y));
-
-  ball.x+=ball.vx*dt;
-  ball.y+=ball.vy*dt;
-
-  if(ball.y-ball.r<=4){
-    ball.y=4+ball.r; ball.vy=Math.abs(ball.vy); beep(260,.035);
-  }
-  if(ball.y+ball.r>=H-4){
-    ball.y=H-4-ball.r; ball.vy=-Math.abs(ball.vy); beep(260,.035);
-  }
-
-  hitPaddle(left,1);
-  hitPaddle(right,-1);
-
-  if(ball.x<-25){
-    score2++;
-    updateScore();
-    point(-1);
-  }
-  if(ball.x>W+25){
-    score1++;
-    updateScore();
-    point(1);
-  }
-}
-
-function hitPaddle(p,dir){
-  const collide =
-    ball.x+ball.r>p.x &&
-    ball.x-ball.r<p.x+paddleW &&
-    ball.y+ball.r>p.y &&
-    ball.y-ball.r<p.y+paddleH;
-
-  if(collide && Math.sign(ball.vx)!==dir){
-    const rel=(ball.y-(p.y+paddleH/2))/(paddleH/2);
-    ball.vx=dir*Math.min(ball.speed*1.08,620);
-    ball.vy=rel*ball.speed*.9;
-    ball.speed=Math.min(ball.speed+12,620);
-    ball.x=dir>0?p.x+paddleW+ball.r:p.x-ball.r;
-    beep(620,.045);
-  }
-}
-
-function point(dir){
-  beep(120,.18,"sawtooth");
-  const max=Number(pointsEl.value);
-  if(score1>=max || score2>=max){
-    running=false; paused=true;
-    show(score1>score2?"JOGADOR 1 VENCEU":"JOGADOR 2 VENCEU",999999);
-    return;
-  }
-  show("PONTO!",700);
-  resetPositions(dir);
-}
-
-function updateScore(){
-  p1El.textContent=String(score1).padStart(2,"0");
-  p2El.textContent=String(score2).padStart(2,"0");
-}
-
-function loop(t){
-  const dt=Math.min(.033,(t-last)/1000||0);
-  last=t;
-  if(running && !paused) update(dt);
-  draw();
-  requestAnimationFrame(loop);
-}
-
-function startGame(){
-  if(!running){
-    score1=0; score2=0; updateScore();
-    resetPositions(Math.random()>.5?1:-1);
-    running=true;
-  }
-  paused=false;
-  show("VALENDO!",550);
-  beep(880,.08);
-}
-
-function resetGame(){
-  running=false; paused=true;
-  score1=0; score2=0; updateScore();
-  resetPositions();
-  show("APERTE INICIAR",999999);
-}
-
-document.getElementById("start").onclick=startGame;
-document.getElementById("reset").onclick=resetGame;
-modeEl.onchange=resetGame;
-pointsEl.onchange=resetGame;
-
-soundBtn.onclick=()=>{
-  muted=!muted;
-  soundBtn.textContent=muted?"SOM OFF":"SOM ON";
-};
-
-window.addEventListener("keydown",e=>{
-  if(["w","s","ArrowUp","ArrowDown"," "].includes(e.key)) e.preventDefault();
-  if(e.key===" ") startGame();
-  keys[e.key]=true;
-});
-window.addEventListener("keyup",e=>keys[e.key]=false);
-
-document.querySelectorAll(".btn").forEach(btn=>{
-  const k=btn.dataset.key;
-  const down=e=>{e.preventDefault();keys[k]=true;btn.classList.add("active");};
-  const up=e=>{e.preventDefault();keys[k]=false;btn.classList.remove("active");};
-  btn.addEventListener("pointerdown",down);
-  btn.addEventListener("pointerup",up);
-  btn.addEventListener("pointercancel",up);
-  btn.addEventListener("pointerleave",up);
-});
-
-resize();
-resetGame();
-requestAnimationFrame(loop);
+const canvas=document.getElementById("c"),ctx=canvas.getContext("2d"),p1El=document.getElementById("p1"),p2El=document.getElementById("p2"),msg=document.getElementById("msg"),modeEl=document.getElementById("mode"),pointsEl=document.getElementById("points"),soundBtn=document.getElementById("sound");
+let W=innerWidth,H=innerHeight,playTop=46,keys={},running=false,paused=true,muted=false,last=0,score1=0,score2=0,left={},right={},ball={};
+function viewport(){W=innerWidth;H=innerHeight;canvas.width=Math.floor(W*devicePixelRatio);canvas.height=Math.floor(H*devicePixelRatio);ctx.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0);playTop=innerWidth>=600?54:46;if(!running)resetPositions()}
+addEventListener("resize",viewport);addEventListener("orientationchange",()=>setTimeout(viewport,200));
+function ph(){return Math.max(108,Math.min(160,H*.23))}
+function resetPositions(dir=Math.random()>.5?1:-1){let h=ph();left={x:22,y:H/2-h/2,w:13,h};right={x:W-35,y:H/2-h/2,w:13,h};let sp=Math.max(340,Math.min(540,W*.95));ball={x:W/2,y:H/2,r:Math.max(9,Math.min(15,W*.03)),speed:sp,vx:dir*sp,vy:(Math.random()*.8-.4)*320}}
+function show(t,time=900){msg.textContent=t;msg.classList.add("show");clearTimeout(show.t);if(time!==999999)show.t=setTimeout(()=>msg.classList.remove("show"),time)}
+let ac=null;function beep(f=500,d=.05,type="square"){if(muted)return;ac=ac||new(AudioContext||webkitAudioContext)();let o=ac.createOscillator(),g=ac.createGain();o.type=type;o.frequency.value=f;g.gain.value=.07;o.connect(g);g.connect(ac.destination);o.start();g.gain.exponentialRampToValueAtTime(.001,ac.currentTime+d);o.stop(ac.currentTime+d)}
+function draw(){ctx.fillStyle="#000";ctx.fillRect(0,0,W,H);ctx.fillStyle="#fff";ctx.fillRect(0,playTop,W,3);ctx.fillRect(0,H-3,W,3);for(let y=playTop+12;y<H;y+=25)ctx.fillRect(W/2-2,y,4,13);ctx.fillRect(left.x,left.y,left.w,left.h);ctx.fillRect(right.x,right.y,right.w,right.h);ctx.fillRect(ball.x-ball.r,ball.y-ball.r,ball.r*2,ball.r*2)}
+function update(dt){let ms=Math.max(540,H*.78);if(keys.w)left.y-=ms*dt;if(keys.s)left.y+=ms*dt;if(modeEl.value==="pvp"){if(keys.ArrowUp)right.y-=ms*dt;if(keys.ArrowDown)right.y+=ms*dt}else{right.y+=(ball.y-right.h/2-right.y)*Math.min(1,dt*5.4)}left.y=Math.max(playTop+5,Math.min(H-left.h-5,left.y));right.y=Math.max(playTop+5,Math.min(H-right.h-5,right.y));ball.x+=ball.vx*dt;ball.y+=ball.vy*dt;if(ball.y-ball.r<=playTop+5){ball.y=playTop+5+ball.r;ball.vy=Math.abs(ball.vy);beep(250,.035)}if(ball.y+ball.r>=H-5){ball.y=H-5-ball.r;ball.vy=-Math.abs(ball.vy);beep(250,.035)}hit(left,1);hit(right,-1);if(ball.x<-30){score2++;updateScore();point(-1)}if(ball.x>W+30){score1++;updateScore();point(1)}}
+function hit(p,dir){if(ball.x+ball.r>p.x&&ball.x-ball.r<p.x+p.w&&ball.y+ball.r>p.y&&ball.y-ball.r<p.y+p.h&&Math.sign(ball.vx)!==dir){let rel=(ball.y-(p.y+p.h/2))/(p.h/2);ball.speed=Math.min(ball.speed+15,720);ball.vx=dir*ball.speed;ball.vy=rel*ball.speed*.82;ball.x=dir>0?p.x+p.w+ball.r:p.x-ball.r;beep(660,.045)}}
+function point(dir){beep(120,.16,"sawtooth");let max=+pointsEl.value;if(score1>=max||score2>=max){running=false;paused=true;show(score1>score2?"JOGADOR 1 VENCEU":"JOGADOR 2 VENCEU",999999);return}show("PONTO!",650);resetPositions(dir)}
+function updateScore(){p1El.textContent=String(score1).padStart(2,"0");p2El.textContent=String(score2).padStart(2,"0")}
+function loop(t){let dt=Math.min(.033,(t-last)/1000||0);last=t;if(running&&!paused)update(dt);draw();requestAnimationFrame(loop)}
+function start(){if(!running){score1=0;score2=0;updateScore();resetPositions();running=true}paused=false;show("VALENDO!",500);beep(900,.07)}
+function reset(){score1=0;score2=0;updateScore();running=false;paused=true;resetPositions();show("APERTE INICIAR",999999)}
+document.getElementById("start").onclick=start;document.getElementById("reset").onclick=reset;modeEl.onchange=reset;pointsEl.onchange=reset;soundBtn.onclick=()=>{muted=!muted;soundBtn.textContent=muted?"🔇":"🔊"};
+addEventListener("keydown",e=>{if(["w","s","ArrowUp","ArrowDown"," "].includes(e.key))e.preventDefault();if(e.key===" ")start();keys[e.key]=true});addEventListener("keyup",e=>keys[e.key]=false);
+document.querySelectorAll(".touch").forEach(b=>{let k=b.dataset.key;let down=e=>{e.preventDefault();keys[k]=true;b.classList.add("active")};let up=e=>{e.preventDefault();keys[k]=false;b.classList.remove("active")};b.addEventListener("pointerdown",down);b.addEventListener("pointerup",up);b.addEventListener("pointercancel",up);b.addEventListener("pointerleave",up)});
+viewport();reset();requestAnimationFrame(loop);
 </script>
 </body>
 </html>
